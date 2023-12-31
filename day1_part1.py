@@ -60,3 +60,5 @@ for value in data_dict.values():
   print(total)
 
 print(f"total = {total}")
+
+
