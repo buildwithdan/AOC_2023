@@ -1,83 +1,78 @@
-cleaned = []
-line_counter = 0
-data_dict = {}
 
-words_to_replace = {
-  "one": 1,
-  "two": 2,
-  "three": 3,
-  "four": 4,
-  "five": 5,
-  "six": 6,
-  "seven": 7,
-  "eight": 8,
-  "nine": 9,
-}
+# ===============TRY 1=====================================
+def words_to_digits(data):
+    words_to_replace = {
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+    }
+    for word, digit in reversed(words_to_replace.items()):
+        data = data.replace(word, digit)
 
-with open("day1_data.txt", "r") as data:
-    for line in data:
-      old_line = line
-      new_line = line
-
-      if line_counter < 1000000:
-        line_counter += 1
-        
-        for word, replace in words_to_replace.items():
-          new_line = new_line.replace(word, str(replace))
-        
-        print(old_line)
-        print(new_line)
-        
-        digits_in_line = []  # List to store all digits found in the line
-        
-        for letter in new_line:
-            if letter.isdigit():
-                number = letter
-                print(number)
-                digits_in_line.append(number)
-                
-            # this is to add another digit, if it only had 1
-        if len(digits_in_line) == 1:
-          number1 = digits_in_line[0]
-          digits_in_line.append(number1)
-          
-        # if more than 2 digits, i need to keep the first and last one.
-        
-        if len(digits_in_line) > 2:
-          number1 = digits_in_line[0]
-          number2 = digits_in_line[-1]
-          digits_in_line.clear()
-          
-          digits_in_line.append(number1)
-          digits_in_line.append(number2) 
-                
-        data_dict[line_counter] = digits_in_line  # Store the list of digits with the line number as key
-        
-        print(f"Line: {line_counter}")
-
-# Print the final data_dict
-print(data_dict)
+    return data
 
 
-# concat numbers together and then add them back into the dict. replacing the old numbers
-for key in data_dict:
-  concat_values = ""
-  for item in data_dict[key]:
-    concat_values += item
-    
-  data_dict[key] = int(concat_values)
-  print(concat_values)
-  
-print(data_dict)
+def extract_num(data):
+  num = []
+  for i in data:
+    if i.isdigit():
+      num.append(i)
+
+  num = int(str(num[0]) + str(num[-1]))
+  return num
+
+# ==============TRY 2 =====================================
+
+def replace_number_words(text_list):
+    pattern = re.compile('|'.join(words_and_digits.keys()))
+
+    def replace_match(match):
+        word = match.group(0)
+        return words_to_digits.get(word, word)
+
+    return [pattern.sub(replace_match, text)]
 
 
-# adding them all together
+# -------------TESTING--------------------------------
+test = ["two1nine", "eightwothree", "abcone2threexyz", "xtwone3four", "4nineeightseven2", "zoneight234", "7pqrstsixteen"]
+# # # Example usage
+# line = words_to_digits('4nineeightseven2')
+# print(line)
+
+# e = extract_num(line)
+# print(e)
+
+#### testing
 total = 0
+for i in test:
+  print(i)
+  line_x = words_to_digits(i)
+  print(line_x)
+  num = extract_num(line_x)
+  print(num)
+  total += num
+print(total)
 
-for value in data_dict.values():
-  total += value
-  print(total)
+# ----------------------------------------------------
 
-print(f"total = {total}")
+### final
+# with open("day1_data.txt", "r") as data:
+#   total = 0
+#   for line in data:
+#     line_x = convert_and_return_string(line)
+#     num = extract_num(line_x)
+#     total += num
 
-{1: 89, 2: 36, 3: 55, 4: 72, 5: 21, 6: 34, 7: 11, 8: 35, 9: 32, 10: 53}
+#   print(total)
+
+
+#not working
+53255
+
+## oneight must equal 18, then you'll get the correct answer. It was not a well worded problem.

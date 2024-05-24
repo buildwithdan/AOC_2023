@@ -3,6 +3,7 @@ line_counter = 0
 data_dict = {}
 
 with open("day1_data.txt", "r") as data:
+    print(data)
     for line in data:
         line_counter += 1
         
@@ -13,18 +14,16 @@ with open("day1_data.txt", "r") as data:
         
         for letter in line:
             if letter.isdigit():
-                number = letter
-                print(number)
-                digits_in_line.append(number)
+                digits_in_line.append(letter)
                 
-            # this is to add another digit, if it only had 1
+# this is to add another digit, if it only had 1
         if len(digits_in_line) == 1:
           number1 = digits_in_line[0]
           digits_in_line.append(number1)
           
-        # if more than 2 digits, i need to keep the first and last one.
+# if more than 1 digit, i need to keep the first and last one.
         
-        if len(digits_in_line) > 2:
+        if len(digits_in_line) > 1:
           number1 = digits_in_line[0]
           number2 = digits_in_line[-1]
           digits_in_line.clear()
@@ -34,10 +33,10 @@ with open("day1_data.txt", "r") as data:
                 
         data_dict[line_counter] = digits_in_line  # Store the list of digits with the line number as key
         
-        print(f"Line: {line_counter}")
+        # print(f"Line: {line_counter}")
 
 # Print the final data_dict
-print(data_dict)
+# print(data_dict)
 
 
 # concat numbers together and then add them back into the dict. replacing the old numbers
@@ -47,9 +46,9 @@ for key in data_dict:
     concat_values += item
     
   data_dict[key] = int(concat_values)
-  print(concat_values)
+  # print(concat_values)
   
-print(data_dict)
+# print(data_dict)
 
 
 # adding them all together
@@ -57,7 +56,7 @@ total = 0
 
 for value in data_dict.values():
   total += value
-  print(total)
+  # print(total)
 
 print(f"total = {total}")
 
